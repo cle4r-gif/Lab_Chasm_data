@@ -242,7 +242,7 @@ def get_album_info(html):
 
 # # Instagram 관련 함수
 
-# In[ ]:
+# In[1]:
 
 
 def login(bot, username, password):
@@ -260,15 +260,12 @@ def login(bot, username, password):
     password_input = WebDriverWait(bot, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']")))
     username_input.clear()
     username_input.send_keys(username)
-    print('username inserted')
     password_input.clear()
     password_input.send_keys(password)
-    print('password inserted')
 
     # login_button = WebDriverWait(bot, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
     # login_button.click()
     password_input.send_keys(Keys.RETURN)
-    print(' lets go !')
     time.sleep(10)
 
 

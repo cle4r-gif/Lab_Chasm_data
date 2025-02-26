@@ -9,10 +9,10 @@ root_path = '.' # !pwd 실행 결과
 
 # # Module
 
-# In[ ]:
+# In[1]:
 
 
-get_ipython().run_line_magic('run', './module.py')
+import module
 
 
 # In[5]:
@@ -349,7 +349,7 @@ df_insta
 # ## Youtube Music (api x, login o)
 # df_ym : ```artist_name | artist_id | artist_id_youtubemusic | youtubemusic_{total, max, min, mean}_stream_cnt```
 
-# # In[ ]:
+# In[ ]:
 
 
 # song_info_df = # ...
@@ -357,7 +357,7 @@ df_insta
 # song_info_df.to_csv(song_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
 
 
-# # In[ ]:
+# In[ ]:
 
 
 # stream_cnt_list = []
@@ -375,7 +375,7 @@ df_insta
 # song_info_df['youtubemusic_stream_cnt'] = stream_cnt_list
 
 
-# # In[ ]:
+# In[ ]:
 
 
 # df_ym = (
@@ -391,7 +391,7 @@ df_insta
 # )
 
 
-# # In[ ]:
+# In[ ]:
 
 
 # df_ym.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)

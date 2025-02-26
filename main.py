@@ -9,10 +9,10 @@ root_path = '.' # !pwd 실행 결과
 
 # # Module
 
-# In[1]:
+# In[ ]:
 
 
-import module
+from module import *
 
 
 # In[5]:

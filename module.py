@@ -265,9 +265,10 @@ def login(bot, username, password):
     password_input.send_keys(password)
     print('password inserted')
 
-    login_button = WebDriverWait(bot, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
-    login_button.click()
-    print('login_button_clicked')
+    # login_button = WebDriverWait(bot, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
+    # login_button.click()
+    password_input.send_keys(Keys.RETURN)
+    print(' lets go !')
     time.sleep(10)
 
 
@@ -366,7 +367,7 @@ def scrape_X(username, password, url_lst, artist_lst):
     service = Service()
     options = webdriver.ChromeOptions()
     options.add_argument("--lang=en")
-    # options.add_argument("--headless")
+    options.add_argument("--headless")
     options.add_argument('--no-sandbox')
     options.add_argument("--log-level=3")
     mobile_emulation = {

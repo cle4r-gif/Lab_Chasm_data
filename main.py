@@ -33,10 +33,10 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[ ]:
+# In[8]:
 
 
-df = pd.read_csv('artist_meta.csv')
+df = pd.read_csv('artist_meta_for_check.csv')
 df
 
 
@@ -53,7 +53,7 @@ client_credentials_manager = SpotifyClientCredentials(client_id = spotify_client
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
-# In[8]:
+# In[ ]:
 
 
 spotify_listener= []

@@ -263,7 +263,7 @@ def login(bot, username, password):
     password_input.clear()
     password_input.send_keys(password)
 
-    login_button = WebDriverWait(bot, 2).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
+    login_button = WebDriverWait(bot, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
     login_button.click()
     time.sleep(10)
 

@@ -1,0 +1,5 @@
+pandas
+selenium
+beautifulsoup4
+google-api-python-client
+spotipy

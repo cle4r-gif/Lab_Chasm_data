@@ -7,19 +7,19 @@
 root_path = '.' # !pwd 실행 결과
 
 
+# # Module
+
+# In[ ]:
+
+
+get_ipython().run_line_magic('run', './module.py')
+
+
 # In[5]:
 
 
 date = date.today().strftime("%Y-%m-%d")
 print(date)
-
-
-# # Module
-
-# In[1]:
-
-
-get_ipython().run_line_magic('run', './module_수정.ipynb')
 
 
 # # Main
@@ -33,7 +33,7 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[ ]:
+# In[7]:
 
 
 df = pd.read_csv('artist_meta.csv')
@@ -43,7 +43,7 @@ df
 # ## 1. Spotify (api o)
 # * df_spotify : ```artist_name | artist_id | artist_id_spotify | spotify_{monthly_listner, follower_cnt, popularity}```
 
-# In[9]:
+# In[8]:
 
 
 spotify_client_id = '92628e1c3af84c00b03953362a8d9b38'
@@ -53,7 +53,7 @@ client_credentials_manager = SpotifyClientCredentials(client_id = spotify_client
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
-# In[ ]:
+# In[10]:
 
 
 spotify_listener= []
@@ -93,14 +93,14 @@ while spotify_listener_error:
     listener_data, error_occur = get_listener(df.loc[spotify_listener_error[0], 'spotify_url'])
     if not error_occur:
         spotify_listener.append({
-            'artist_id':spotify_listener_error.pop(0)
-    time.sleepartist_id, 'artist_id_spotify':artist_id_spotify, 'artist_name':artist_name,
+            'artist_id':spotify_listener_error.pop(0),
+            'artist_id_spotify':artist_id_spotify, 'artist_name':artist_name,
             'spotify_monthly_listener': listener_data
         })
         (get_random_wait_sec(1, 2))
 
 
-# In[ ]:
+# In[11]:
 
 
 # artist_name | artist_id | artist_id_spotify | spotify_{monthly_listner, follower_cnt, popularity}
@@ -114,7 +114,7 @@ df_spotify
 # ## 2. Youtube (api o)
 # * df_youtube : ```artist_name | artist_id | artist_id_youtube | youtube_{follower_cnt, video_cnt, total_views}```
 
-# In[41]:
+# In[12]:
 
 
 # Quota가 부족해서 오류 발생할 수 있음
@@ -125,7 +125,7 @@ youtube_api_key_2 = 'AIzaSyD-Iv1vOcKsaBb-3tuwKxqePvTcw76jIcQ'
 api_service = build('youtube', 'v3', developerKey=youtube_api_key_1)
 
 
-# In[ ]:
+# In[14]:
 
 
 # 메인 실행 코드
@@ -148,6 +148,7 @@ for i, row in df.iterrows():
     if pd.isna(artist_id_youtube):
         subscribers = None
         total_views = None
+        video_cnt = None
         youtube_channel_lst.append({
         'artist_id':artist_id, 'artist_id_youtube':artist_id_youtube, 'artist_name':artist_name,
         'youtube_follower_cnt': subscribers, 'youtube_video_cnt': video_cnt,'youtube_total_views': total_views
@@ -180,7 +181,7 @@ for i, row in df.iterrows():
     time.sleep(get_random_wait_sec(1, 2))
 
 
-# In[43]:
+# In[15]:
 
 
 df_youtube = pd.DataFrame(youtube_channel_lst)
@@ -188,7 +189,7 @@ df_youtube.to_csv(artist_file_path.format(root_path=root_path, date=date, platfo
 df_youtube
 
 
-# In[ ]:
+# In[16]:
 
 
 df_youtube_videos = pd.DataFrame(youtube_video_lst)
@@ -199,7 +200,7 @@ df_youtube_videos
 # ## Melon (api x, login x)
 # df_melon : ```artist_name | artist_id | artist_id_melon | melon_{follower_cnt, song_cnt, album_cnt} | (total/max/min/mean)_(song/album)_likes}```
 
-# In[ ]:
+# In[17]:
 
 
 options = webdriver.ChromeOptions()
@@ -208,7 +209,7 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
 
-# In[ ]:
+# In[18]:
 
 
 driver = webdriver.Chrome(options=options)
@@ -319,7 +320,7 @@ df_melon
 # ## Instagram (api x, login o)
 # ```artist_name | artist_id | artist_id_instagram | instagram_follower_cnt```
 
-# In[11]:
+# In[19]:
 
 
 instagram_username = 'botbotnotsaram'
@@ -327,7 +328,7 @@ instagram_password = 'botforthesaram@'
 cookie = "botforthesaram@"
 
 
-# In[ ]:
+# In[20]:
 
 
 url_lst = [instagram_url.format(artistid=artist_id) for artist_id in df['artist_id_instagram']]

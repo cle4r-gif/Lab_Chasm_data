@@ -9,13 +9,13 @@ root_path = '.' # !pwd 실행 결과
 
 # # Module
 
-# In[ ]:
+# In[2]:
 
 
 from module import *
 
 
-# In[5]:
+# In[3]:
 
 
 date = date.today().strftime("%Y-%m-%d")
@@ -26,14 +26,14 @@ print(date)
 
 # ## 0. Setting
 
-# In[6]:
+# In[4]:
 
 
 if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[7]:
+# In[ ]:
 
 
 df = pd.read_csv('artist_meta.csv')
@@ -43,17 +43,17 @@ df
 # ## 1. Spotify (api o)
 # * df_spotify : ```artist_name | artist_id | artist_id_spotify | spotify_{monthly_listner, follower_cnt, popularity}```
 
-# In[8]:
+# In[5]:
 
 
-spotify_client_id = '92628e1c3af84c00b03953362a8d9b38'
-spotify_client_secret = '3a159c7819fe4af9bb81c592beefdbdb'
+spotify_client_id = 'cc0f7a2b724c40c8861b88c9a7c9734f'
+spotify_client_secret = 'bfd464f4f89247ca8159532a4b4727fb'
 
 client_credentials_manager = SpotifyClientCredentials(client_id = spotify_client_id, client_secret = spotify_client_secret )
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
-# In[10]:
+# In[8]:
 
 
 spotify_listener= []
@@ -78,7 +78,7 @@ for i, row in df.iterrows():
             'spotify_monthly_listener': listener_data
         })
 
-    follower_data, popularity_data = get_follower_popularity(url)
+    follower_data, popularity_data = get_follower_popularity(url, sp)
     spotify_follower_popularity.append({
         'artist_id':artist_id, 'artist_id_spotify':artist_id_spotify, 'artist_name':artist_name,
         'spotify_follower_cnt': follower_data, 'spotify_popularity': popularity_data
@@ -411,7 +411,7 @@ x_password = 'botforthesaram@'
 # In[ ]:
 
 
-url_lst = url_lst = [x_url.format(artistid=artist_id) for artist_id in df['artist_id_x']]
+url_lst = [x_url.format(artistid=artist_id) for artist_id in df['artist_id_x']]
 artist_lst = df['artist_name']
 
 X_followers = scrape_X(x_username, x_password, url_lst, artist_lst)

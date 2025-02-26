@@ -108,12 +108,12 @@ def get_listener(spotify_url):
 
 
 # api로 팔로워와 popularity 추출
-def get_follower_popularity(spotify_url):
+def get_follower_popularity(artist_id_spotify, sp):
     try:
-        api_results = sp.artist(extract_artist_id(spotify_url))
+        api_results = sp.artist(artist_id_spotify)
         follower_data = api_results['followers']['total']
     except Exception as e:
-        print('follower: error ;l_occur')
+        print('follower: error_occur')
         follower_data = None
     try:
         popularity_data = api_results['popularity']

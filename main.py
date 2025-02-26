@@ -15,7 +15,7 @@ root_path = '.' # !pwd 실행 결과
 from module import *
 
 
-# In[4]:
+# In[3]:
 
 
 date = date.today().strftime("%Y-%m-%d")
@@ -26,14 +26,14 @@ print(date)
 
 # ## 0. Setting
 
-# In[5]:
+# In[4]:
 
 
 if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[3]:
+# In[5]:
 
 
 df = pd.read_csv('artist_meta_for_check.csv')
@@ -320,7 +320,7 @@ df_melon
 # ## Instagram (api x, login o)
 # ```artist_name | artist_id | artist_id_instagram | instagram_follower_cnt```
 
-# In[4]:
+# In[6]:
 
 
 instagram_username = 'botbotnotsaram'
@@ -328,7 +328,7 @@ instagram_password = 'botforthesaram@'
 cookie = "botforthesaram@"
 
 
-# In[5]:
+# In[7]:
 
 
 url_lst = [instagram_url.format(artistid=artist_id) for artist_id in df['artist_id_instagram']]
@@ -401,14 +401,14 @@ df_insta
 # ## X (api x, login o)
 # df_x : ```artist_name | artist_id | artist_id_x | X_follower_cnt```
 
-# In[ ]:
+# In[8]:
 
 
 x_username = 'botbotnotsaram'
 x_password = 'botforthesaram@'
 
 
-# In[ ]:
+# In[9]:
 
 
 url_lst = [x_url.format(artistid=artist_id) for artist_id in df['artist_id_x']]
@@ -440,7 +440,9 @@ from functools import reduce
 # df_melon = pd.read_csv(artist_file_path.format(root_path=root_path, date=date, platform='melon'), index=False)
 # df_ym = pd.read_csv(artist_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
 
-dfs = [df[['artist_id', 'artist_name']], df_spotify, df_youtube, df_ym, df_insta, df_x, df_melon]
+# dfs = [df[['artist_id', 'artist_name']], df_spotify, df_youtube, df_ym, df_insta, df_x, df_melon]
+
+dfs = [df[['artist_id', 'artist_name']], df_spotify, df_youtube, df_insta, df_x, df_melon]
 df_all = reduce(lambda left, right: left.merge(right, on=["artist_id", "artist_name"], how="left"), dfs)
 
 df_all.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='all'), index=False)

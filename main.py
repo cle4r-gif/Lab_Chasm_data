@@ -15,7 +15,7 @@ root_path = '.' # !pwd 실행 결과
 from module import *
 
 
-# In[3]:
+# In[4]:
 
 
 date = date.today().strftime("%Y-%m-%d")
@@ -26,14 +26,14 @@ print(date)
 
 # ## 0. Setting
 
-# In[4]:
+# In[5]:
 
 
 if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[8]:
+# In[3]:
 
 
 df = pd.read_csv('artist_meta_for_check.csv')
@@ -114,7 +114,7 @@ df_spotify
 # ## 2. Youtube (api o)
 # * df_youtube : ```artist_name | artist_id | artist_id_youtube | youtube_{follower_cnt, video_cnt, total_views}```
 
-# In[12]:
+# In[7]:
 
 
 # Quota가 부족해서 오류 발생할 수 있음
@@ -122,7 +122,7 @@ df_spotify
 youtube_api_key_1 = 'AIzaSyBam8SFhHQf9ImS2bhpbjlQQ2k0HNkT20A'
 youtube_api_key_2 = 'AIzaSyD-Iv1vOcKsaBb-3tuwKxqePvTcw76jIcQ'
 
-api_service = build('youtube', 'v3', developerKey=youtube_api_key_1)
+api_service = build('youtube', 'v3', developerKey=youtube_api_key_2)
 
 
 # In[14]:
@@ -320,7 +320,7 @@ df_melon
 # ## Instagram (api x, login o)
 # ```artist_name | artist_id | artist_id_instagram | instagram_follower_cnt```
 
-# In[19]:
+# In[4]:
 
 
 instagram_username = 'botbotnotsaram'
@@ -328,7 +328,7 @@ instagram_password = 'botforthesaram@'
 cookie = "botforthesaram@"
 
 
-# In[20]:
+# In[5]:
 
 
 url_lst = [instagram_url.format(artistid=artist_id) for artist_id in df['artist_id_instagram']]

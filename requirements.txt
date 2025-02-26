@@ -4,3 +4,4 @@ beautifulsoup4
 webdriver-manager
 google-api-python-client
 spotipy
+qspread

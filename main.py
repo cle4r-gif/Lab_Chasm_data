@@ -308,7 +308,7 @@ df_melon = pd.merge(left=df_melon, right=album_info_df_agg, how='inner', on='art
 
 df_melon.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='melon'), index=False)
 song_info_df.to_csv(song_file_path.format(root_path=root_path, date=date, platform='melon'), index=False)
-album_info_df.to_csv(album_file_path.format(root_pat-h=root_path, date=date, platform='melon'), index=False)
+album_info_df.to_csv(album_file_path.format(root_path=root_path, date=date, platform='melon'), index=False)
 
 
 # In[ ]:

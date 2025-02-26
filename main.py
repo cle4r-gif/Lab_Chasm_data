@@ -349,53 +349,53 @@ df_insta
 # ## Youtube Music (api x, login o)
 # df_ym : ```artist_name | artist_id | artist_id_youtubemusic | youtubemusic_{total, max, min, mean}_stream_cnt```
 
-# In[ ]:
+# # In[ ]:
 
 
-song_info_df = # ...
-song_info_df = song_info_df.rename(columns={'song_likes' : 'youtubemusic_song_likes', 'stream_cnt':'youtubemusic_stream_cnt'})
-song_info_df.to_csv(song_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
+# song_info_df = # ...
+# song_info_df = song_info_df.rename(columns={'song_likes' : 'youtubemusic_song_likes', 'stream_cnt':'youtubemusic_stream_cnt'})
+# song_info_df.to_csv(song_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
 
 
-# In[ ]:
+# # In[ ]:
 
 
-stream_cnt_list = []
-for i, row in song_info_df.iterrows():
-    stream_cnt_str = row['youtubemusic_stream_cnt']
-    if '천회' in stream_cnt_str:
-        stream_cnt = float(stream_cnt_str.split("천회")[0]) * 1000
-    elif '만회' in stream_cnt_str:
-        stream_cnt = float(stream_cnt_str.split("만회")[0]) * 10000
-    elif '억' in stream_cnt_str:
-        stream_cnt = float(stream_cnt_str.split("억")[0]) * 100000000
-    else:
-        stream_cnt = float(stream_cnt_str.split("회")[0])
-    stream_cnt_list.append(stream_cnt)
-song_info_df['youtubemusic_stream_cnt'] = stream_cnt_list
+# stream_cnt_list = []
+# for i, row in song_info_df.iterrows():
+#     stream_cnt_str = row['youtubemusic_stream_cnt']
+#     if '천회' in stream_cnt_str:
+#         stream_cnt = float(stream_cnt_str.split("천회")[0]) * 1000
+#     elif '만회' in stream_cnt_str:
+#         stream_cnt = float(stream_cnt_str.split("만회")[0]) * 10000
+#     elif '억' in stream_cnt_str:
+#         stream_cnt = float(stream_cnt_str.split("억")[0]) * 100000000
+#     else:
+#         stream_cnt = float(stream_cnt_str.split("회")[0])
+#     stream_cnt_list.append(stream_cnt)
+# song_info_df['youtubemusic_stream_cnt'] = stream_cnt_list
 
 
-# In[ ]:
+# # In[ ]:
 
 
-df_ym = (
-    song_info_df
-    .groupby(['artist_name', 'artist_id', 'artist_id_youtubemusic'])
-    .agg(
-        youtubemusic_total_stream_cnt = ('youtubemusic_stream_cnt', 'sum'),
-        youtubemusic_max_song_stream_cnt   = ('youtubemusic_stream_cnt', 'max'),
-        youtubemusic_min_song_stream_cnt   = ('youtubemusic_stream_cnt', 'min'),
-        youtubemusic_mean_song_stream_cnt  = ('youtubemusic_stream_cnt', 'mean'),
-    )
-    .reset_index()
-)
+# df_ym = (
+#     song_info_df
+#     .groupby(['artist_name', 'artist_id', 'artist_id_youtubemusic'])
+#     .agg(
+#         youtubemusic_total_stream_cnt = ('youtubemusic_stream_cnt', 'sum'),
+#         youtubemusic_max_song_stream_cnt   = ('youtubemusic_stream_cnt', 'max'),
+#         youtubemusic_min_song_stream_cnt   = ('youtubemusic_stream_cnt', 'min'),
+#         youtubemusic_mean_song_stream_cnt  = ('youtubemusic_stream_cnt', 'mean'),
+#     )
+#     .reset_index()
+# )
 
 
-# In[ ]:
+# # In[ ]:
 
 
-df_ym.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
-df_ym
+# df_ym.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
+# df_ym
 
 
 # ## X (api x, login o)

@@ -33,7 +33,7 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[4]:
+# In[9]:
 
 
 df = pd.read_csv('artist_meta_for_check.csv')
@@ -114,7 +114,7 @@ df_spotify
 # ## 2. Youtube (api o)
 # * df_youtube : ```artist_name | artist_id | artist_id_youtube | youtube_{follower_cnt, video_cnt, total_views}```
 
-# In[5]:
+# In[6]:
 
 
 # Quota가 부족해서 오류 발생할 수 있음
@@ -145,7 +145,7 @@ for i, row in df.iterrows():
         'youtube_follower_cnt': subscribers, 'youtube_video_cnt': video_cnt,'youtube_total_views': total_views
     })
         continue
-    if pd.isna(artist_id_youtube) or artist_id_youtube=="" or artist_id_youtube=='nan':
+    if pd.isna(artist_id_youtube):
         subscribers = None
         total_views = None
         video_cnt = None

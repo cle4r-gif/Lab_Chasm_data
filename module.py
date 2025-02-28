@@ -293,7 +293,7 @@ def scrape_insta(username, password, url_lst, artist_lst):
 
     followers = []
     for artist, url in zip(artist_lst, url_lst):
-        if pd.isna(url) or url=="" or url =='nan':
+        if pd.isna(url):
             followers_count = None
             followers.append({'artist_name': artist, 'instagram_follower_cnt': followers_count})
             continue
@@ -410,7 +410,7 @@ def scrape_X(username, password, url_lst, artist_lst):
     followers = []
 
     for artist, url in zip(artist_lst, url_lst):
-        if pd.isna(url) or url=="" or url =='nan':
+        if pd.isna(url):
             followers_count = None
             followers.append({'artist_name': artist, 'X_follower_cnt': followers_count})
             continue

@@ -1,0 +1,4 @@
+artist_id,artist_name,artist_id_spotify,spotify_monthly_listener,spotify_follower_cnt,spotify_popularity,artist_id_youtube,youtube_follower_cnt,youtube_video_cnt,youtube_total_views,instagram_follower_cnt,X_follower_cnt,artist_id_melon,melon_follower_cnt,melon_song_cnt,melon_album_cnt,melon_total_song_likes,melon_max_song_likes,melon_min_song_likes,melon_mean_song_likes,melon_total_album_likes,melon_max_album_likes,melon_min_album_likes,melon_mean_album_likes
+0,250,,,,,,,,,36218,,640712,3219,14,4,12737,2157,340,909.7857142857143,3204,2744,108,801.0
+1,갤럭시익스프레스,,,,,,,,,4041,2249.0,227741,1531,158,38,13830,1659,0,87.53164556962025,5610,823,0,147.6315789473684
+2,검엑스,,,,,,,,,3138,2674.0,107122,500,98,16,3927,604,4,40.07142857142857,854,247,12,53.375

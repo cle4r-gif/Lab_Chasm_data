@@ -242,7 +242,7 @@ def get_album_info(html):
 
 # # Instagram 관련 함수
 
-# In[ ]:
+# In[1]:
 
 
 def login_insta(bot, username, password):
@@ -269,7 +269,7 @@ def login_insta(bot, username, password):
     time.sleep(10)
 
 
-def scrape_insta(username, password, url_lst, artist_lst):
+def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
 
     service = Service()
     options = webdriver.ChromeOptions()
@@ -292,7 +292,7 @@ def scrape_insta(username, password, url_lst, artist_lst):
     login_insta(bot, username, password)
 
     followers = []
-    for artist, url in zip(artist_lst, url_lst):
+    for artist, artist_id, url in zip(artist_lst, artist_id_lst, url_lst):
         if pd.isna(url):
             followers_count = None
             followers.append({'artist_name': artist, 'instagram_follower_cnt': followers_count})
@@ -336,7 +336,7 @@ def scrape_insta(username, password, url_lst, artist_lst):
         except Exception as e:
             print(e)
             followers_count = None
-        followers.append({'artist_name':artist, 'instagram_follower_cnt': followers_count})
+        followers.append({'artist_id':artist_id, 'artist_name':artist, 'instagram_follower_cnt': followers_count})
     bot.quit()
     return followers
 
@@ -386,7 +386,7 @@ def login_X(bot, username, password):
 
     time.sleep(10)
 
-def scrape_X(username, password, url_lst, artist_lst):
+def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
     service = Service()
     options = webdriver.ChromeOptions()
     options.add_argument("--lang=en")
@@ -409,7 +409,7 @@ def scrape_X(username, password, url_lst, artist_lst):
 
     followers = []
 
-    for artist, url in zip(artist_lst, url_lst):
+    for artist, artist_id, url in zip(artist_lst, artist_id_lst, url_lst):
         if pd.isna(url):
             followers_count = None
             followers.append({'artist_name': artist, 'X_follower_cnt': followers_count})
@@ -449,7 +449,7 @@ def scrape_X(username, password, url_lst, artist_lst):
         except Exception as e:
             print(e)
             followers_count = None
-        followers.append({'artist_name': artist, 'X_follower_cnt': followers_count})
+        followers.append({'artist_id':artist_id, 'artist_name': artist, 'X_follower_cnt': followers_count})
     bot.quit()
     return followers
 

@@ -33,7 +33,7 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[9]:
+# In[5]:
 
 
 df = pd.read_csv('artist_meta_for_check.csv')
@@ -114,7 +114,7 @@ df_spotify
 # ## 2. Youtube (api o)
 # * df_youtube : ```artist_name | artist_id | artist_id_youtube | youtube_{follower_cnt, video_cnt, total_views}```
 
-# In[6]:
+# In[ ]:
 
 
 # Quota가 부족해서 오류 발생할 수 있음
@@ -122,10 +122,10 @@ df_spotify
 youtube_api_key_1 = 'AIzaSyBam8SFhHQf9ImS2bhpbjlQQ2k0HNkT20A'
 youtube_api_key_2 = 'AIzaSyD-Iv1vOcKsaBb-3tuwKxqePvTcw76jIcQ'
 
-api_service = build('youtube', 'v3', developerKey=youtube_api_key_2)
+api_service = build('youtube', 'v3', developerKey=youtube_api_key_1)
 
 
-# In[ ]:
+# In[10]:
 
 
 # 메인 실행 코드
@@ -320,7 +320,7 @@ df_melon
 # ## Instagram (api x, login o)
 # ```artist_name | artist_id | artist_id_instagram | instagram_follower_cnt```
 
-# In[8]:
+# In[19]:
 
 
 instagram_username = 'botbotnotsaram'
@@ -328,14 +328,14 @@ instagram_password = 'botforthesaram@'
 cookie = "botforthesaram@"
 
 
-# In[9]:
+# In[20]:
 
 
-url_lst = [instagram_url.format(artistid=artist_id) for artist_id in df['artist_id_instagram']]
+url_lst = [instagram_url.format(artistid=artist_id) if not pd.isna(artist_id) else None for artist_id in df['artist_id_instagram']]
 
 instagram_followers = scrape_insta(
     username = instagram_username, password = instagram_password,
-    url_lst = url_lst, artist_lst = df['artist_name'])
+    url_lst = url_lst, artist_lst = df['artist_name'], artist_id_lst = df['artist_id'])
 
 
 # In[21]:
@@ -401,23 +401,24 @@ df_insta
 # ## X (api x, login o)
 # df_x : ```artist_name | artist_id | artist_id_x | X_follower_cnt```
 
-# In[5]:
+# In[26]:
 
 
 x_username = 'botbotnotsaram'
 x_password = 'botforthesaram@'
 
 
-# In[6]:
+# In[27]:
 
 
-url_lst = [x_url.format(artistid=artist_id) for artist_id in df['artist_id_x']]
+url_lst =  [x_url.format(artistid=artist_id) if not pd.isna(artist_id) else None for artist_id in df['artist_id_x']]
+
 artist_lst = df['artist_name']
+artist_id_lst = df['artist_id']
+X_followers = scrape_X(x_username, x_password, url_lst, artist_lst, artist_id_lst)
 
-X_followers = scrape_X(x_username, x_password, url_lst, artist_lst)
 
-
-# In[ ]:
+# In[28]:
 
 
 df_x = pd.DataFrame(X_followers)
@@ -428,7 +429,13 @@ df_x
 
 # ## Merge
 
-# In[ ]:
+# In[29]:
+
+
+df_melon
+
+
+# In[30]:
 
 
 from functools import reduce
@@ -448,7 +455,7 @@ df_all = reduce(lambda left, right: left.merge(right, on=["artist_id", "artist_n
 df_all.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='all'), index=False)
 
 
-# In[ ]:
+# In[31]:
 
 
 df_all

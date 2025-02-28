@@ -33,7 +33,7 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[7]:
+# In[4]:
 
 
 df = pd.read_csv('artist_meta_for_check.csv')
@@ -125,7 +125,7 @@ youtube_api_key_2 = 'AIzaSyD-Iv1vOcKsaBb-3tuwKxqePvTcw76jIcQ'
 api_service = build('youtube', 'v3', developerKey=youtube_api_key_2)
 
 
-# In[10]:
+# In[ ]:
 
 
 # 메인 실행 코드
@@ -145,7 +145,7 @@ for i, row in df.iterrows():
         'youtube_follower_cnt': subscribers, 'youtube_video_cnt': video_cnt,'youtube_total_views': total_views
     })
         continue
-    if pd.isna(artist_id_youtube):
+    if pd.isna(artist_id_youtube) or artist_id_youtube=="":
         subscribers = None
         total_views = None
         video_cnt = None
@@ -401,14 +401,14 @@ df_insta
 # ## X (api x, login o)
 # df_x : ```artist_name | artist_id | artist_id_x | X_follower_cnt```
 
-# In[10]:
+# In[5]:
 
 
 x_username = 'botbotnotsaram'
 x_password = 'botforthesaram@'
 
 
-# In[11]:
+# In[6]:
 
 
 url_lst = [x_url.format(artistid=artist_id) for artist_id in df['artist_id_x']]

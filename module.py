@@ -30,11 +30,11 @@ genie_song_url = "https://www.genie.co.kr/detail/songInfo?xgnm={songid}"
 
 # # Library
 
-# In[2]:
+# In[ ]:
 
 
 import pandas as pd
-
+import numpy as np
 import requests
 
 import selenium
@@ -245,7 +245,7 @@ def get_album_info(html):
 # In[ ]:
 
 
-def login(bot, username, password):
+def login_insta(bot, username, password):
     bot.get('https://www.instagram.com/accounts/login/')
     time.sleep(5)
     # Check if cookies need to be accepted
@@ -280,20 +280,20 @@ def scrape_insta(username, password, url_lst, artist_lst):
     options.add_argument("--disable-dev-shm-usage")  # 메모리 부족 문제 해결
     options.add_argument('--no-sandbox')
     options.add_argument("--log-level=3")
-    # options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    mobile_emulation = {
-        "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
-    options.add_experimental_option("mobileEmulation", mobile_emulation)
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    # mobile_emulation = {
+    #     "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
+    # options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 
     bot = webdriver.Chrome(service=service, options=options)
     bot.set_page_load_timeout(15) # Set the page load timeout to 15 seconds
 
-    login(bot, username, password)
+    login_insta(bot, username, password)
 
     followers = []
     for artist, url in zip(artist_lst, url_lst):
-        if pd.isna(url):
+        if pd.isna(url) or url=="":
             followers_count = None
             followers.append({'artist_name': artist, 'instagram_follower_cnt': followers_count})
             continue
@@ -346,6 +346,23 @@ def scrape_insta(username, password, url_lst, artist_lst):
 # In[ ]:
 
 
+def handle_security_check(bot):
+    """보안 확인 화면에서 이메일을 입력하고 다음 단계로 진행"""
+    try:
+        # 이메일 입력 필드 찾기
+        email_input = WebDriverWait(bot, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@name="text"]'))
+        )
+        email_input.send_keys("tim0610@naver.com")  # 이메일 입력
+        email_input.send_keys(Keys.RETURN)  # Enter 키 입력
+        print("[Info] - 이메일 입력 완료")
+
+        time.sleep(5)  # 다음 페이지 로딩 대기
+
+    except Exception as e:
+        print(f"[Error] - 보안 확인 처리 중 오류 발생: {e}")
+
+
 def login_X(bot, username, password):
     bot.get('https://x.com/i/flow/login')
     time.sleep(5)
@@ -357,7 +374,9 @@ def login_X(bot, username, password):
     username_input.send_keys(Keys.RETURN)
     print('username_input done')
     time.sleep(5)
-    bot.find_element_by_tag_name('body').screenshot('login.png')
+    
+    handle_security_check(bot)
+    
     password_input = WebDriverWait(bot, 10).until(
         EC.presence_of_element_located((By.XPATH, '//input[@name="password"]'))
     )
@@ -377,10 +396,10 @@ def scrape_X(username, password, url_lst, artist_lst):
     options.add_argument("--disable-dev-shm-usage")  # 메모리 부족 문제 해결
     options.add_argument('--no-sandbox')
     options.add_argument("--log-level=3")
-    # options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    mobile_emulation = {
-        "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
-    options.add_experimental_option("mobileEmulation", mobile_emulation)
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    # mobile_emulation = {
+        # "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
+    # options.add_experimental_option("mobileEmulation", mobile_emulation)
 
     bot = webdriver.Chrome(service=service, options=options)
     bot.set_page_load_timeout(15)  # Set the page load timeout to 15 seconds
@@ -391,7 +410,7 @@ def scrape_X(username, password, url_lst, artist_lst):
     followers = []
 
     for artist, url in zip(artist_lst, url_lst):
-        if pd.isna(url):
+        if pd.isna(url) or url=="":
             followers_count = None
             followers.append({'artist_name': artist, 'X_follower_cnt': followers_count})
             continue

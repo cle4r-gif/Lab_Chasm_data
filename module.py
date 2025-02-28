@@ -357,6 +357,7 @@ def login_X(bot, username, password):
     username_input.send_keys(Keys.RETURN)
     print('username_input done')
     time.sleep(5)
+    bot.find_element_by_tag_name('body').screenshot('login.png')
     password_input = WebDriverWait(bot, 10).until(
         EC.presence_of_element_located((By.XPATH, '//input[@name="password"]'))
     )

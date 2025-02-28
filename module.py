@@ -242,7 +242,7 @@ def get_album_info(html):
 
 # # Instagram 관련 함수
 
-# In[1]:
+# In[ ]:
 
 
 def login(bot, username, password):
@@ -355,12 +355,14 @@ def login_X(bot, username, password):
     )
     username_input.send_keys(username)
     username_input.send_keys(Keys.RETURN)
-    time.sleep(1.5)
+    print('username_input done')
+    time.sleep(5)
     password_input = WebDriverWait(bot, 10).until(
         EC.presence_of_element_located((By.XPATH, '//input[@name="password"]'))
     )
     password_input.send_keys(password)
     password_input.send_keys(Keys.RETURN)
+    print('password_input done')
 
     time.sleep(10)
 
@@ -383,6 +385,7 @@ def scrape_X(username, password, url_lst, artist_lst):
     bot.set_page_load_timeout(15)  # Set the page load timeout to 15 seconds
 
     login_X(bot, username, password)
+    print("let's go")
 
     followers = []
 
@@ -429,4 +432,5 @@ def scrape_X(username, password, url_lst, artist_lst):
         followers.append({'artist_name': artist, 'X_follower_cnt': followers_count})
     bot.quit()
     return followers
+
 

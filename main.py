@@ -33,7 +33,7 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
     os.makedirs(f"{root_path}/data/daily/{date}".format(root_path, date))
 
 
-# In[5]:
+# In[7]:
 
 
 df = pd.read_csv('artist_meta_for_check.csv')
@@ -43,7 +43,7 @@ df
 # ## 1. Spotify (api o)
 # * df_spotify : ```artist_name | artist_id | artist_id_spotify | spotify_{monthly_listner, follower_cnt, popularity}```
 
-# In[5]:
+# In[6]:
 
 
 spotify_client_id = 'cc0f7a2b724c40c8861b88c9a7c9734f'
@@ -53,7 +53,7 @@ client_credentials_manager = SpotifyClientCredentials(client_id = spotify_client
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
-# In[ ]:
+# In[7]:
 
 
 spotify_listener= []
@@ -100,7 +100,7 @@ while spotify_listener_error:
         (get_random_wait_sec(1, 2))
 
 
-# In[11]:
+# In[8]:
 
 
 # artist_name | artist_id | artist_id_spotify | spotify_{monthly_listner, follower_cnt, popularity}
@@ -114,7 +114,7 @@ df_spotify
 # ## 2. Youtube (api o)
 # * df_youtube : ```artist_name | artist_id | artist_id_youtube | youtube_{follower_cnt, video_cnt, total_views}```
 
-# In[7]:
+# In[9]:
 
 
 # Quota가 부족해서 오류 발생할 수 있음
@@ -125,7 +125,7 @@ youtube_api_key_2 = 'AIzaSyD-Iv1vOcKsaBb-3tuwKxqePvTcw76jIcQ'
 api_service = build('youtube', 'v3', developerKey=youtube_api_key_2)
 
 
-# In[14]:
+# In[10]:
 
 
 # 메인 실행 코드
@@ -181,7 +181,7 @@ for i, row in df.iterrows():
     time.sleep(get_random_wait_sec(1, 2))
 
 
-# In[15]:
+# In[11]:
 
 
 df_youtube = pd.DataFrame(youtube_channel_lst)
@@ -189,7 +189,7 @@ df_youtube.to_csv(artist_file_path.format(root_path=root_path, date=date, platfo
 df_youtube
 
 
-# In[16]:
+# In[12]:
 
 
 df_youtube_videos = pd.DataFrame(youtube_video_lst)
@@ -200,7 +200,7 @@ df_youtube_videos
 # ## Melon (api x, login x)
 # df_melon : ```artist_name | artist_id | artist_id_melon | melon_{follower_cnt, song_cnt, album_cnt} | (total/max/min/mean)_(song/album)_likes}```
 
-# In[17]:
+# In[13]:
 
 
 options = webdriver.ChromeOptions()
@@ -209,14 +209,14 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
 
-# In[18]:
+# In[14]:
 
 
 driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(page_load_wait_sec) # 각 페이지 로딩(driver.get())까지의 최대 대기 시간 설정
 
 
-# In[ ]:
+# In[15]:
 
 
 artist_info_df, song_info_df, album_info_df = [], [], []
@@ -272,7 +272,7 @@ album_info_df  = pd.DataFrame(album_info_df,  columns=['artist_id', 'artist_id_m
 driver.quit()
 
 
-# In[ ]:
+# In[16]:
 
 
 # aggregate (song / album) info by artistid
@@ -303,7 +303,7 @@ df_melon = pd.merge(left=artist_info_df, right=song_info_df_agg, how="inner", on
 df_melon = pd.merge(left=df_melon, right=album_info_df_agg, how='inner', on='artist_id')
 
 
-# In[ ]:
+# In[17]:
 
 
 df_melon.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='melon'), index=False)
@@ -311,7 +311,7 @@ song_info_df.to_csv(song_file_path.format(root_path=root_path, date=date, platfo
 album_info_df.to_csv(album_file_path.format(root_path=root_path, date=date, platform='melon'), index=False)
 
 
-# In[ ]:
+# In[18]:
 
 
 df_melon
@@ -320,7 +320,7 @@ df_melon
 # ## Instagram (api x, login o)
 # ```artist_name | artist_id | artist_id_instagram | instagram_follower_cnt```
 
-# In[6]:
+# In[8]:
 
 
 instagram_username = 'botbotnotsaram'
@@ -328,7 +328,7 @@ instagram_password = 'botforthesaram@'
 cookie = "botforthesaram@"
 
 
-# In[7]:
+# In[9]:
 
 
 url_lst = [instagram_url.format(artistid=artist_id) for artist_id in df['artist_id_instagram']]
@@ -338,7 +338,7 @@ instagram_followers = scrape_insta(
     url_lst = url_lst, artist_lst = df['artist_name'])
 
 
-# In[ ]:
+# In[21]:
 
 
 df_insta = pd.DataFrame(instagram_followers)
@@ -349,7 +349,7 @@ df_insta
 # ## Youtube Music (api x, login o)
 # df_ym : ```artist_name | artist_id | artist_id_youtubemusic | youtubemusic_{total, max, min, mean}_stream_cnt```
 
-# In[ ]:
+# In[22]:
 
 
 # song_info_df = # ...
@@ -357,7 +357,7 @@ df_insta
 # song_info_df.to_csv(song_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
 
 
-# In[ ]:
+# In[23]:
 
 
 # stream_cnt_list = []
@@ -375,7 +375,7 @@ df_insta
 # song_info_df['youtubemusic_stream_cnt'] = stream_cnt_list
 
 
-# In[ ]:
+# In[24]:
 
 
 # df_ym = (
@@ -391,7 +391,7 @@ df_insta
 # )
 
 
-# In[ ]:
+# In[25]:
 
 
 # df_ym.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='youtubemusic'), index=False)
@@ -401,14 +401,14 @@ df_insta
 # ## X (api x, login o)
 # df_x : ```artist_name | artist_id | artist_id_x | X_follower_cnt```
 
-# In[8]:
+# In[10]:
 
 
 x_username = 'botbotnotsaram'
 x_password = 'botforthesaram@'
 
 
-# In[9]:
+# In[11]:
 
 
 url_lst = [x_url.format(artistid=artist_id) for artist_id in df['artist_id_x']]

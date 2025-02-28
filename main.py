@@ -114,7 +114,7 @@ df_spotify
 # ## 2. Youtube (api o)
 # * df_youtube : ```artist_name | artist_id | artist_id_youtube | youtube_{follower_cnt, video_cnt, total_views}```
 
-# In[9]:
+# In[5]:
 
 
 # Quota가 부족해서 오류 발생할 수 있음
@@ -145,7 +145,7 @@ for i, row in df.iterrows():
         'youtube_follower_cnt': subscribers, 'youtube_video_cnt': video_cnt,'youtube_total_views': total_views
     })
         continue
-    if pd.isna(artist_id_youtube) or artist_id_youtube=="":
+    if pd.isna(artist_id_youtube) or artist_id_youtube=="" or artist_id_youtube=='nan':
         subscribers = None
         total_views = None
         video_cnt = None

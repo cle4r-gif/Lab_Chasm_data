@@ -47,6 +47,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager as CM
 
 from bs4 import BeautifulSoup
@@ -310,7 +311,7 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
                         EC.presence_of_element_located((By.XPATH, f"//a[@href='/{artist_name}/followers/']")))
     
                     break
-                except NoSuchElementException:
+                except (NoSuchElementException, TimeoutException):
                     time.sleep(2)  # Wait for 2 seconds before retrying
             
             if parent_a_tag is None:
@@ -330,7 +331,6 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
         except Exception as e:
             print(e)
             followers_count = None
-        bot.save_screenshot("insta_trouble?.png")
         followers.append({'artist_id':artist_id, 'artist_name':artist, 'instagram_follower_cnt': followers_count})
     bot.quit()
     return followers
@@ -355,7 +355,7 @@ def handle_security_check(bot):
         time.sleep(5)  # 다음 페이지 로딩 대기
 
     except Exception as e:
-        print(f"[Error] - 보안 확인 처리 중 오류 발생: {e}")
+        print(f"보안 확인 X")
 
 
 def login_X(bot, username, password):
@@ -418,7 +418,7 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
             bot.get(url)
             artist_name = url.split('.com/')[1].split('/')[0]
             print(f"[Info] - Scraping # of followers for {artist}, ID:{artist_name}...")
-            time.sleep(random.uniform(5, 20))
+            time.sleep(random.uniform(8, 20))
 
             # Wait until the script tag is found or timeout
             script_tag = None
@@ -429,7 +429,7 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
                     )
 
                     break
-                except NoSuchElementException:
+                except (NoSuchElementException, TimeoutException):
                     time.sleep(2)  # Wait for 2 seconds before retrying
 
             if script_tag is None:
@@ -448,7 +448,6 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
         except Exception as e:
             print(e)
             followers_count = None
-        bot.save_screenshot('X_trouble?.png')
         followers.append({'artist_id':artist_id, 'artist_name': artist, 'X_follower_cnt': followers_count})
     bot.quit()
     return followers

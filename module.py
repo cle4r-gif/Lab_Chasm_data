@@ -234,12 +234,6 @@ def get_album_info(html):
   return album_type, album_name, like_cnt
 
 
-# In[ ]:
-
-
-
-
-
 # # Instagram 관련 함수
 
 # In[ ]:
@@ -285,10 +279,10 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
     mobile_emulation = {
         "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
     options.add_experimental_option("mobileEmulation", mobile_emulation)
-
+    
 
     bot = webdriver.Chrome(service=service, options=options)
-    bot.set_page_load_timeout(15) # Set the page load timeout to 15 seconds
+    bot.set_page_load_timeout(30) # Set the page load timeout to 15 seconds
 
     login_insta(bot, username, password)
 
@@ -312,10 +306,9 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
             parent_a_tag = None
             for _ in range(10):  # Retry up to 10 times
                 try:
-                    parent_a_tag = bot.find_element(
-                        By.XPATH,
-                        f"//a[@href='/{artist_name}/followers/']"
-                    )
+                    parent_a_tag =  WebDriverWait(bot, 10).until(
+                        EC.presence_of_element_located((By.XPATH, f"//a[@href='/{artist_name}/followers/']")))
+    
                     break
                 except NoSuchElementException:
                     time.sleep(2)  # Wait for 2 seconds before retrying
@@ -337,7 +330,7 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
         except Exception as e:
             print(e)
             followers_count = None
-        bot.savescreenshot(f'trouble?.png')
+        bot.save_screenshot("insta_trouble?.png")
         followers.append({'artist_id':artist_id, 'artist_name':artist, 'instagram_follower_cnt': followers_count})
     bot.quit()
     return followers
@@ -405,7 +398,7 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
     options.add_experimental_option("mobileEmulation", mobile_emulation)
 
     bot = webdriver.Chrome(service=service, options=options)
-    bot.set_page_load_timeout(15)  # Set the page load timeout to 15 seconds
+    bot.set_page_load_timeout(30)  # Set the page load timeout to 15 seconds
 
     login_X(bot, username, password)
     print("let's go")
@@ -431,7 +424,10 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
             script_tag = None
             for _ in range(10):  # Retry up to 10 times
                 try:
-                    script_tag = bot.find_element(By.XPATH, "//script[@type='application/ld+json' and @data-testid='UserProfileSchema-test']")
+                    script_tag = WebDriverWait(bot, 10).until(
+                         EC.presence_of_element_located((By.XPATH, "//script[@type='application/ld+json']"))
+                    )
+
                     break
                 except NoSuchElementException:
                     time.sleep(2)  # Wait for 2 seconds before retrying
@@ -452,7 +448,7 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
         except Exception as e:
             print(e)
             followers_count = None
-        bot.savescreenshot(f'trouble?.png')
+        bot.save_screenshot('X_trouble?.png')
         followers.append({'artist_id':artist_id, 'artist_name': artist, 'X_follower_cnt': followers_count})
     bot.quit()
     return followers

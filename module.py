@@ -242,7 +242,7 @@ def get_album_info(html):
 
 # # Instagram 관련 함수
 
-# In[1]:
+# In[ ]:
 
 
 def login_insta(bot, username, password):
@@ -275,15 +275,16 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
     options = webdriver.ChromeOptions()
     options.add_argument("--lang=en")
     options.add_argument("--headless")
+    options.add_argument("--remote-debugging-port=9222")
     options.add_argument("--window-size=1920,1080")  # 창 크기 지정
     options.add_argument("--disable-gpu")  # GPU 비활성화 (Headless 안정성 증가)
     options.add_argument("--disable-dev-shm-usage")  # 메모리 부족 문제 해결
     options.add_argument('--no-sandbox')
     options.add_argument("--log-level=3")
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    # mobile_emulation = {
-    #     "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
-    # options.add_experimental_option("mobileEmulation", mobile_emulation)
+    # options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    mobile_emulation = {
+        "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 
     bot = webdriver.Chrome(service=service, options=options)
@@ -391,15 +392,16 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
     options = webdriver.ChromeOptions()
     options.add_argument("--lang=en")
     options.add_argument("--headless")
+    options.add_argument("--remote-debugging-port=9222")
     options.add_argument("--window-size=1920,1080")  # 창 크기 지정
     options.add_argument("--disable-gpu")  # GPU 비활성화 (Headless 안정성 증가)
     options.add_argument("--disable-dev-shm-usage")  # 메모리 부족 문제 해결
     options.add_argument('--no-sandbox')
     options.add_argument("--log-level=3")
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    # mobile_emulation = {
-        # "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
-    # options.add_experimental_option("mobileEmulation", mobile_emulation)
+    # options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    mobile_emulation = {
+        "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/90.0.1025.166 Mobile Safari/535.19"}
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
 
     bot = webdriver.Chrome(service=service, options=options)
     bot.set_page_load_timeout(15)  # Set the page load timeout to 15 seconds

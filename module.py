@@ -337,6 +337,7 @@ def scrape_insta(username, password, url_lst, artist_lst, artist_id_lst):
         except Exception as e:
             print(e)
             followers_count = None
+        bot.savescreenshot(f'trouble?.png')
         followers.append({'artist_id':artist_id, 'artist_name':artist, 'instagram_follower_cnt': followers_count})
     bot.quit()
     return followers
@@ -451,6 +452,7 @@ def scrape_X(username, password, url_lst, artist_lst, artist_id_lst):
         except Exception as e:
             print(e)
             followers_count = None
+        bot.savescreenshot(f'trouble?.png')
         followers.append({'artist_id':artist_id, 'artist_name': artist, 'X_follower_cnt': followers_count})
     bot.quit()
     return followers

@@ -320,7 +320,7 @@ df_melon
 # ## Instagram (api x, login o)
 # ```artist_name | artist_id | artist_id_instagram | instagram_follower_cnt```
 
-# In[19]:
+# In[6]:
 
 
 instagram_username = 'botbotnotsaram'

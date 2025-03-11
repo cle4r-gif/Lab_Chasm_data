@@ -1,3 +1,6 @@
 *.ipynb
 *.pem
 *.png
+*.bat
+log.txt
+log2.txt

@@ -3,6 +3,9 @@
 
 # In[1]:
 
+import sys
+with open("log.txt", "w") as f:
+    f.write(sys.executable)
 
 root_path = '.' # !pwd 실행 결과
 
@@ -36,7 +39,7 @@ if not os.path.exists(f"{root_path}/data/daily/{date}".format(root_path, date)):
 # In[5]:
 
 
-df = pd.read_csv('artist_meta_for_check.csv')
+df = pd.read_csv('artist_meta.csv')
 df
 
 
@@ -122,7 +125,7 @@ df_spotify
 youtube_api_key_1 = 'AIzaSyBam8SFhHQf9ImS2bhpbjlQQ2k0HNkT20A'
 youtube_api_key_2 = 'AIzaSyD-Iv1vOcKsaBb-3tuwKxqePvTcw76jIcQ'
 
-api_service = build('youtube', 'v3', developerKey=youtube_api_key_1)
+api_service = build('youtube', 'v3', developerKey=youtube_api_key_2)
 
 
 # In[10]:
@@ -460,3 +463,6 @@ df_all.to_csv(artist_file_path.format(root_path=root_path, date=date, platform='
 
 df_all
 
+import sys
+with open("log2.txt", "w") as f:
+    f.write(sys.executable)

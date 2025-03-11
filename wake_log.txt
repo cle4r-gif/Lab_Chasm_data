@@ -1,0 +1,2 @@
+[SERVICE] \Device\HarddiskVolume3\Windows\System32\svchost.exe (SystemEventsBroker)에서 설정한 타이머가 오전 1:32:31에서 2025-03-12에 만료됩니다.
+  이유: 컴퓨터의 절전 모드를 해제하도록 요청한 'NT TASK\LabChasm' 예약 작업이 실행됩니다.
